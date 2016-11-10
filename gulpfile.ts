@@ -19,7 +19,7 @@ const autoprefixer = require('gulp-autoprefixer');// Подключаем биб
 /*
 New strings
 */
-gulp.task('sass', ['resources'], function(){ // Создаем таск Sass
+gulp.task('sass', function(){ // Создаем таск Sass
     return gulp.src('src/sass/**/*.sass') // Берем источник
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
@@ -79,7 +79,7 @@ gulp.task("compile", /*["tslint"],*/ () => {
  * Copy all resources that are not TypeScript files into build directory.
  */
 gulp.task("resources", () => {
-    return gulp.src(["src/**/*", "!**/*.ts"])
+    return gulp.src(["src/**/*", "!**/*.ts", "!app/**/*.js"])
         .pipe(gulp.dest("build"));
 });
 
@@ -106,10 +106,10 @@ gulp.task('watch', function () {
     gulp.watch(["src/**/*.ts"], ['compile']).on('change', function (e) {
         console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
     });
-    gulp.watch('src/sass/**/*.sass', ['sass']).on('change', function (e) {
-        console.log('Resource file ' + e.path + ' has been changed. Updating.');
+    gulp.watch(["src/sass/**/*.sass"], ['sass', 'resources', 'compile']).on('change', function (e) {
+        console.log('Sass file ' + e.path + ' has been changed. Updating.');
     });
-    gulp.watch(["src/**/*.html", "src/**/*.css"], ['resources']).on('change', function (e) {
+    gulp.watch(["src/**/*.html", "src/**/*.css"], ['resources', 'compile']).on('change', function (e) {
         console.log('Resource file ' + e.path + ' has been changed. Updating.');
     });
 });
@@ -117,6 +117,6 @@ gulp.task('watch', function () {
 /**
  * Build the project.
  */
-gulp.task("build", ['img', 'sass', 'scripts', 'compile', 'resources', 'libs'], () => {
+gulp.task("build", ['img', 'sass', 'scripts', 'libs', 'resources', 'compile'], () => {
     console.log("Building the project ...");
 });

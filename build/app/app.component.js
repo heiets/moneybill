@@ -29,42 +29,45 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             exports_1("Item", Item);
             AppComponent = (function () {
                 function AppComponent() {
-                    this.items = [
-                        { purchase: "Хлеб", price: 1, id: 1 },
-                        { purchase: "Хлеб", price: 2, id: 2 },
-                        { purchase: "Хлеб", price: 3, id: 3 },
-                        { purchase: "Хлеб", price: 4, id: 4 }
-                    ];
-                    this.total = 10;
+                    this.items = [];
+                    this.total = this.count();
                 }
+                AppComponent.prototype.count = function () {
+                    var total = 0;
+                    for (var i = 0; i < this.items.length; i++) {
+                        total += this.items[i].price;
+                    }
+                    return this.total = total;
+                };
                 AppComponent.prototype.addItem = function (text, price) {
                     if (text == null || text == undefined || text.trim() == "")
                         return;
                     if (price == null || price == undefined)
                         return;
                     this.items.push(new Item(text, price, this.items.length + 1));
-                    var total;
-                    total = 0;
-                    for (var i = 0; i < this.items.length; i++) {
-                        total += this.items[i].price;
-                    }
-                    this.total = total;
+                    this.count();
                 };
                 AppComponent.prototype.deleteItem = function (id) {
                     console.log(this);
                     console.log(id);
                     if (id == null || id == undefined)
                         return;
-                    this.total -= this.items[id - 1].price;
                     this.items.splice(id - 1, 1);
                     for (var key in this.items) {
                         this.items[key].id = +key + 1;
                     }
+                    this.count();
+                };
+                AppComponent.prototype.clearAll = function () {
+                    this.items.length = 0;
+                    this.count();
+                };
+                AppComponent.prototype.showItem = function () {
                 };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'bill-app',
-                        templateUrl: "./app/app.html"
+                        templateUrl: './app/app.html'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

@@ -13,17 +13,20 @@ export class Item {
 }
 @Component({
 	selector: 'bill-app',
-    templateUrl: "./app/app.html"
+    templateUrl: './app/app.html'
 })
-export class AppComponent { 
+export class AppComponent {
     items: Item[] = 
     [
-    { purchase: "Хлеб", price: 1, id: 1 },
-    { purchase: "Хлеб", price: 2, id: 2 },
-    { purchase: "Хлеб", price: 3, id: 3 },
-    { purchase: "Хлеб", price: 4, id: 4 }
     ];
-    total: number = 10;
+    total: number = this.count();
+    count(): number {
+        let total: number = 0;
+        for (let i = 0; i < this.items.length; i++) {
+            total += this.items[i].price;
+        }
+        return this.total = total;
+    }
     addItem(text: string, price: number): void {
 
         if(text==null || text==undefined || text.trim()=="")
@@ -31,22 +34,24 @@ export class AppComponent {
         if(price==null || price==undefined)
             return;
         this.items.push(new Item(text, price, this.items.length + 1));
-        let total: number;
-        total = 0;
-        for (let i = 0; i < this.items.length; i++) {
-        	total += this.items[i].price;
-        }
-        this.total = total;
+        this.count();
     }
     deleteItem(id: number): void {
         console.log(this);
         console.log(id);
         if(id==null || id==undefined)
             return;
-        this.total -= this.items[id-1].price;
         this.items.splice(id-1, 1);
         for (let key in this.items) {
             this.items[key].id = +key+1;
         }
+        this.count();
+    }
+    clearAll(): void {
+        this.items.length = 0;
+        this.count();
+    }
+    showItem(): void {
+
     }
 }

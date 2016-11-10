@@ -1,43 +1,50 @@
-<div class="panel">
-	<div class="form-inline">
-		<div class="form-group">
-			<div class="col-md-8">
-				<input class="form-control" [(ngModel)]="text" placeholder = "Название" />
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-md-6">
-				<input type="number" class="form-control" [(ngModel)]="price" placeholder="Цена" />
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-8">
-				<button class="btn btn-default" (click)="addItem(text, price)">Добавить</button>
-			</div>
-		</div>
-	</div>
+<div>
 	<table class="table table-striped">
 		<thead>
-			<tr>
-				<th>Предмет</th>
-				<th>Цена</th>
-				<th>Цена</th>
-			</tr>
+			<div class=" table__header control__form">
+				<div class="col-md-4 col-xs-4 table__header__text">Item</div>
+				<div class="col-md-4 col-xs-4 table__header__text text-center">
+				<div class="logo" (click)="clearAll()"><i class="fa fa-money logo-i" aria-hidden="true"></i></div>
+				</div>
+				<div class="col-md-4 col-xs-4 table__header__text text-right">Cost</div>
+			</div>
 		</thead>
 		<tbody>
-			<tr *ngFor="let item of items">
-				<td>{{item.purchase}}</td>
-				<td>{{item.price}}</td>
-				<td><button  id={{item.id}} (click)="deleteItem(item.id)">Delete</button></td>
-			</tr>
-		</tbody>
-	</table>
-	<div>
-	<div class="col-md-6 text-left">Total: </div>
-	<div class="col-md-6 text-right">{{total}}</div>
-	</div>
-	<div>
-	Created by <a href="vk.com/sanomchik" target="_blank">Oleksandr Heiets</a>
-	</div>
+			<div *ngIf="items.length == 0">
+				<div class="item__header">
+					<div class="col-md-12 col-xs-12 item__header__title text-center">
+						Your bill is empty. Add something!</div>
+					</div>
+				</div>
+				<div class="item" *ngFor="let item of items" (click)="showItem($event)">
+					<div class="item__header">
+						<div class="col-md-6 col-xs-6 item__header__title">{{item.purchase}}</div>
+						<div class="col-md-6 col-xs-6 text-right item__header__price">{{item.price}}</div>
+					</div>
+					<div class="col-md-12 col-xs-12"><button  class="delete-btn" id={{item.id}} (click)="deleteItem(item.id)">Delete</button></div>
+				</div>
+			</tbody>
+		</table>
+		<div class="control__form">
+			<div>
+				<div class="col-md-6 col-xs-6 text-left total">Total: </div>
+				<div class="col-md-6 col-xs-6 text-right total">{{total}}</div>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<input class="form-control control__button" [(ngModel)]="text" placeholder = "Title" />
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<input type="number" class="form-control control__button" [(ngModel)]="price" placeholder="Price" />
+			</div>
+			<div class="col-md-12 col-sm-12">
+				<button class="btn btn-success addItem-btn control__button" (click)="addItem(text, price)">Add</button>
+			</div>
+			<div class="col-md-12 col-sm-12">
+				<button class="btn btn-danger clearAll-btn control__button" (click)="clearAll()">Clear all</button>
+			</div>
+			<div class="text-center">
+				Created by <a href="https://vk.com/sanomchik" target="_blank">Oleksandr Heiets</a>
+			</div>
+		</div>
 
-</div>
+	</div>
