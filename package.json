@@ -1,7 +1,7 @@
 {
   "name": "angular2-typescript-gulp",
   "version": "1.0.0",
-  "description": "Angular2 with TypeScript and Gulp QuickStart",
+  "description": "Angular2 with TypeScript and Gulp",
   "scripts": {
     "clean": "gulp clean",
     "compile": "gulp compile",
@@ -9,15 +9,8 @@
     "start": "concurrent --kill-others \"gulp watch\" \"lite-server\"",
     "postinstall": "typings install"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kolorobot/angular2-typescript-gulp.git"
-  },
-  "author": "Rafał Borowiec",
+  "author": "Oleksandr Heiets",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kolorobot/angular2-typescript-gulp/issues"
-  },
   "dependencies": {
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
