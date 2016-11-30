@@ -1,5 +1,5 @@
 # moneybill
-https://sanomchik.github.io/moneybill/
+https://heiets.github.io/moneybill/
 
 Based on Angular 2 this app helps you to count total summary of added items.
 
