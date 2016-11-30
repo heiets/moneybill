@@ -37,7 +37,37 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     for (var i = 0; i < this.items.length; i++) {
                         total += this.items[i].price;
                     }
+                    this.total = total;
+                    this.LS();
                     return this.total = total;
+                };
+                AppComponent.prototype.LS = function () {
+                    if (typeof window.localStorage.a == 'undefined') {
+                        console.log('from undefined', typeof window.localStorage.a == undefined);
+                        window.localStorage.a = '[]';
+                    }
+                    if (typeof window.localStorage.a == 'undefined' || window.localStorage.a == '[]' || this.total != 0) {
+                        console.log('window.localStorage.a == undefined ', window.localStorage.a == undefined);
+                        console.log('window.localStorage.a == [] ', window.localStorage.a == '[]');
+                        console.log('this.total != 0 ', this.total != 0);
+                        console.log('from if', this.total);
+                        //console.log('from if', window.localStorage);
+                        //console.log('from if', JSON.parse(window.localStorage.a));
+                        //console.log('this.items ', this.items);
+                        window.localStorage.a = JSON.stringify(this.items);
+                        this.items = JSON.parse(window.localStorage.a);
+                        return window.localStorage.a;
+                    }
+                    if (typeof window.localStorage.a != undefined) {
+                        console.log('window.localStorage.a == undefined ', window.localStorage.a == undefined);
+                        console.log('window.localStorage.a == 0 ', window.localStorage.a == 0);
+                        console.log('this.total != 0 ', this.total != 0);
+                        console.log('from else', window.localStorage);
+                        //console.log('from else', JSON.parse(window.localStorage.a));
+                        //console.log('this.items ', this.items);
+                        this.items = JSON.parse(window.localStorage.a);
+                        return window.localStorage.a;
+                    }
                 };
                 AppComponent.prototype.addItem = function (text, price) {
                     if (text == null || text == undefined || text.trim() == "")
@@ -59,6 +89,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.count();
                 };
                 AppComponent.prototype.clearAll = function () {
+                    window.localStorage.clear();
                     this.items.length = 0;
                     this.count();
                 };
